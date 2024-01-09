@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.pj.spring</groupId>
+    <artifactId>pj-spring-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>rocketMQ</module>
+        <module>sharding</module>
+    </modules>
+
+    <!-- 版本管理 -->
+    <properties>
+        <!-- 编译管理 -->
+        <java.version>17</java.version>
+        <compile.jdk.version>17</compile.jdk.version>
+        <compile.encoding.version>UTF-8</compile.encoding.version>
+
+        <!-- 项目编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Maven管理 -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.2.0</maven-source-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+
+        <!-- Spring管理 -->
+        <spring-boot.version>3.2.1</spring-boot.version>
+        <springdoc.version>2.1.0</springdoc.version>
+        <spring-integration.version>6.1.1</spring-integration.version>
+
+        <!-- 数据库组件 -->
+        <mysql.version>8.0.32</mysql.version>
+        <jpa.version>3.2.1</jpa.version>
+        <druid-spring-boot.version>1.2.20</druid-spring-boot.version>
+
+        <!-- 分库分表组件 -->
+        <shardingsphere.version>5.4.0</shardingsphere.version>
+
+        <!-- Mybatis组件 -->
+        <mybatis.version>3.0.2</mybatis.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <pagehelper.version>1.4.7</pagehelper.version>
+
+        <!-- 工具组件 -->
+        <junit.version>4.13.2</junit.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
+        <lombok.version>1.18.30</lombok.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <hutool.version>5.8.16</hutool.version>
+
+        <!-- 消息队列 -->
+        <rocketmq-starter.version>2.2.3</rocketmq-starter.version>
+        <spring-kafka.version>3.0.8</spring-kafka.version>
+        <kafka-clients.version>3.5.0</kafka-clients.version>
+    </properties>
+
+</project>

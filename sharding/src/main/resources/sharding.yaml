@@ -1,0 +1,75 @@
+dataSources:
+  #  默认数据源
+#  sharding:
+#    default-data-source-name: s1
+    # 指定数据源
+#  names: s1,s2
+  s0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://139.155.84.163:3306/sharding_sphere_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: root_pangjie
+  s1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://139.155.84.163:3306/sharding_sphere_demo1?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: root_pangjie
+  s2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://139.155.84.163:3306/sharding_sphere_demo2?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: root_pangjie
+# 指定配置表在哪个数据库，表名称是什么。spring.shardingsphere.sharding.tables.表名.actual-data-nodes=datasource-names.table-name_$->{start..end}
+rules:
+- !SHARDING
+    tables:
+      # 逻辑表名称
+      sharding_test:
+        # 行表达式标识符可以使用 ${...} 或 $->{...}，但前者与 Spring 本身的属性文件占位符冲突，因此在 Spring 环境中使用行表达式标识符建议使用 $->{...}
+        actualDataNodes: s$->{1..2}.sharding_test_$->{0..2}
+        # 分库策略
+        databaseStrategy:
+          standard:
+            # 分片列名称
+            shardingColumn: s_id
+            # 分片算法名称
+            shardingAlgorithmName: database-inline
+        # 分表策略
+        tableStrategy:
+          standard:
+            # 分片列名称
+            shardingColumn: s_id
+            # 分片算法名称
+            shardingAlgorithmName: table-inline
+    # 分片算法配置
+    shardingAlgorithms:
+      database-inline:
+        # 分片算法类型
+        type: INLINE
+        props:
+          # 分片算法的行表达式
+          algorithm-expression: s$->{s_id % 2 + 1}
+      table-inline:
+        # 分片算法类型
+        type: INLINE
+        props:
+          # 分片算法的行表达式
+          algorithm-expression: sharding_test_$->{s_id % 3}
+    # 分布式序列算法配置
+    keyGenerators:
+      snowflake:
+        # 分布式序列算法（雪花算法：SNOWFLAKE； UUID：UUID）（注：UUID没有props配置）
+        type: SNOWFLAKE
+        # 分布式序列算法属性配置
+        props:
+          # 工作机器唯一标识
+          worker-id: 1
+
+
+# 控制台显示SQL语句
+props:
+  sql:
+    show: true

@@ -1,0 +1,4 @@
+rocket:
+  topic:
+    topicTest: 'pj_topic_test'
+    topicTestTag: 'pjdev'

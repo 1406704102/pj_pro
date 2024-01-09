@@ -1,0 +1,71 @@
+# 数据源配置
+server:
+  port: 8062
+spring:
+  #配置 Jpa
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        show_sql: true
+    open-in-view: true
+
+#  5.3
+  datasource:
+    driverClassName: org.apache.shardingsphere.driver.ShardingSphereDriver
+    url: jdbc:shardingsphere:classpath:sharding.yaml
+#  5.2
+#  shardingsphere:
+#    datasource:
+#      # 默认数据源
+#      sharding:
+#        default-data-source-name: db_master
+#      names: db_master,db_1,db_2
+#      db_master:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://139.155.84.163:3306/sharding_sphere_demo?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+#        username: root
+#        password: root_pangjie
+#      db_1:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://139.155.84.163:3306/sharding_sphere_demo1?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+#        username: root
+#        password: root_pangjie
+#      db_2:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://139.155.84.163:3306/sharding_sphere_demo2?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=true
+#        username: root
+#        password: root_pangjie
+#    rules:
+#      sharding:
+#        tables:
+#          # sharding_test逻辑
+#          sharding_test:
+#            actual-data-nodes: db_${1..2}.sharding_test_${0..2}
+#            # sharding_test库路由
+#            database-strategy:
+#              standard:
+#                sharding-column: s_id
+#                sharding-algorithm-name: database_inline
+#            # sharding_test表路由
+#            table-strategy:
+#              standard:
+#                sharding-column: s_id
+#                sharding-algorithm-name: table_inline
+#        sharding-algorithms:
+#          # sharding_test库路由算法
+#          database_inline:
+#            type: INLINE
+#            props:
+#              algorithm-expression: db_${s_id % 2}
+#          # sharding_test表路由算法
+#          table_inline:
+#            type: INLINE
+#            props:
+#              algorithm-expression: sharding_test_${s_id % 3}
+#    props:
+#      sql-show: true
+#      sql-comment-parse-enabled: true
