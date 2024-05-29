@@ -1,9 +1,6 @@
 package com.example.rocketmq.config;
 
 import com.alibaba.fastjson.JSONObject;
-import jakarta.annotation.Resource;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;

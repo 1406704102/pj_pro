@@ -1,17 +1,12 @@
 package com.example.rocketmq.config;
 
-import cn.hutool.core.date.TimeInterval;
 import com.alibaba.fastjson.JSONObject;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
+import javax.annotation.Resource;
 
 @Slf4j
 public abstract class EnhanceMessageHandler<T extends BaseMessage> {

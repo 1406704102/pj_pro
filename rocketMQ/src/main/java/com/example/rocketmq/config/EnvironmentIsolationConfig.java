@@ -1,14 +1,12 @@
 package com.example.rocketmq.config;
 
-import jakarta.annotation.Resource;
-import lombok.AllArgsConstructor;
 import org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
 
 
 @Configuration

@@ -3,6 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+
     <groupId>com.pj.spring</groupId>
     <artifactId>pj-spring-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -11,6 +13,10 @@
     <modules>
         <module>rocketMQ</module>
         <module>sharding</module>
+        <module>data-jpa</module>
+        <module>saToken</module>
+        <module>redis</module>
+        <module>redis</module>
     </modules>
 
     <!-- 版本管理 -->
@@ -33,10 +39,11 @@
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
 
         <!-- Spring管理 -->
-        <spring-boot.version>3.2.1</spring-boot.version>
+        <spring-boot.version>2.7.6</spring-boot.version>
         <springdoc.version>2.1.0</springdoc.version>
         <spring-integration.version>6.1.1</spring-integration.version>
 
+        <sa-token.version>1.37.0</sa-token.version>
         <!-- 数据库组件 -->
         <mysql.version>8.0.32</mysql.version>
         <jpa.version>3.2.1</jpa.version>
@@ -45,13 +52,10 @@
         <!-- 分库分表组件 -->
         <shardingsphere.version>5.4.0</shardingsphere.version>
 
-        <!-- Mybatis组件 -->
-        <mybatis.version>3.0.2</mybatis.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <pagehelper.version>1.4.7</pagehelper.version>
 
         <!-- 工具组件 -->
         <junit.version>4.13.2</junit.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <lombok.version>1.18.30</lombok.version>
         <slf4j.version>2.0.9</slf4j.version>
