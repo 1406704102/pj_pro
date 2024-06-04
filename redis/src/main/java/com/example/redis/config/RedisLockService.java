@@ -19,7 +19,7 @@ public class RedisLockService {
     /**
      * 分布式锁过期时间，单位秒
      */
-    private static final Long DEFAULT_LOCK_EXPIRE_TIME = 60L;
+    private static final Long DEFAULT_LOCK_EXPIRE_TIME = 20L;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -38,6 +38,7 @@ public class RedisLockService {
         do {
             boolean lock = lock(key, value, DEFAULT_LOCK_EXPIRE_TIME);
             if (lock) {
+                renewal(key, value);
                 return true;
             }
             try {
@@ -58,8 +59,14 @@ public class RedisLockService {
      * @return
      */
     public boolean lock(String key, String value, Long expire) {
-        String luaScript = "if redis.call('setnx', KEYS[1], ARGV[1]) == 1 " +
-                "then return redis.call('expire', KEYS[1], ARGV[2]) else return 0 end";
+        String luaScript = "" +
+                "if redis.call('setnx', KEYS[1], ARGV[1]) == 1 " +
+                "then " +
+                "return " +
+                "redis.call('expire', KEYS[1], ARGV[2]) " +
+                "else " +
+                "return 0 " +
+                "end";
         RedisScript<Long> redisScript = new DefaultRedisScript<>(luaScript, Long.class);
         Long result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), value, String.valueOf(expire));
         return result.equals(Long.valueOf(1));
@@ -74,9 +81,39 @@ public class RedisLockService {
      * @return
      */
     public boolean releaseLock(String key, String value) {
-        String luaScript = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+        String luaScript = "" +
+                "if redis.call('get', KEYS[1]) == ARGV[1] " +
+                "then " +
+                "return redis.call('del', KEYS[1]) " +
+                "else " +
+                "return 0 " +
+                "end";
         RedisScript<Long> redisScript = new DefaultRedisScript<>(luaScript, Long.class);
         Long result = stringRedisTemplate.execute(redisScript, Collections.singletonList(key), value);
         return result.equals(Long.valueOf(1));
+    }
+
+    //续期锁
+    public void renewal(String key, String value) {
+        String luaScript = "" +
+                "if redis.call('get', KEYS[1]) == ARGV[1] " +
+                "then " +
+                "return " +
+                "redis.call('expire', KEYS[1], ARGV[2]) " +
+                "else " +
+                "return 0 " +
+                "end";
+        new Thread(() -> {
+            while (stringRedisTemplate.execute(new DefaultRedisScript<>(luaScript, Long.class), Collections.singletonList(key), value, String.valueOf(DEFAULT_LOCK_EXPIRE_TIME)) != null
+                    && stringRedisTemplate.execute(new DefaultRedisScript<>(luaScript, Long.class), Collections.singletonList(key), value, String.valueOf(DEFAULT_LOCK_EXPIRE_TIME)).equals(Long.valueOf(1))) {
+                try {
+                    System.out.println("续期");
+                    Thread.sleep(DEFAULT_LOCK_EXPIRE_TIME * 1000 / 2);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }).start();
     }
 }

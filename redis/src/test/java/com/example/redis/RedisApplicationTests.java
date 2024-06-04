@@ -178,18 +178,30 @@ class RedisApplicationTests {
 
     @Test
     public void lockTest(){
-        //分布式自增ID
-        for (int i = 0; i < 10; i++) {
-            Long incrementId = stringRedisTemplate.opsForValue().increment("orderId");
-            //设置2秒后自动过期
-            stringRedisTemplate.expire("orderId", 2, TimeUnit.SECONDS);
-            System.out.println("orderId当前值：" +  incrementId);
-        }
 
         //分布式加锁，5秒自动过期
         boolean lock = redisLockService.tryLock("LOCK", "test", Duration.ofSeconds(10));
-        System.out.println("加锁结果：" +  lock);
-//        boolean unlock = redisLockService.releaseLock("LOCK", "test");
-//        System.out.println("解锁结果：" +  unlock);
+        System.out.println("加锁结果1：" +  lock);
+        try {
+            Thread.sleep(40000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        boolean unlock = redisLockService.releaseLock("LOCK", "test");
+        System.out.println("解锁结果1：" +  unlock);
+    }
+    @Test
+    public void lockTest2(){
+
+        //分布式加锁，5秒自动过期
+        boolean lock = redisLockService.tryLock("LOCK", "test", Duration.ofSeconds(10));
+        System.out.println("加锁结果2：" +  lock);
+//        try {
+//            Thread.sleep(20000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        boolean unlock = redisLockService.releaseLock("LOCK", "test");
+        System.out.println("解锁结果2：" +  unlock);
     }
 }
