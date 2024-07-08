@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * redis分布式锁服务类
