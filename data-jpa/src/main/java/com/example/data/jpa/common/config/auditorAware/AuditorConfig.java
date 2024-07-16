@@ -25,6 +25,7 @@ public class AuditorConfig implements AuditorAware<String> {
             return Optional.of("SecurityUtils.getCurrentUsername()");
         }catch (Exception ignored){}
         // 用户定时任务，或者无Token调用的情况
+
         return Optional.of("System");
     }
 }
